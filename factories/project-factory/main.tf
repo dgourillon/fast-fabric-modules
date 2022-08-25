@@ -123,7 +123,7 @@ locals {
 
 module "billing-alert" {
   for_each              = local.billing_alert == null ? {} : { 1 = 1 }
-  source                = "github.com/dgourillon/factories/billing-budget"
+  source                = "github.com/dgourillon/fast-fabric-modules/billing-budget"
   billing_account       = local.billing_account_id
   name                  = "${module.project.project_id} budget"
   amount                = local.billing_alert.amount
@@ -138,7 +138,7 @@ module "billing-alert" {
 }
 
 module "dns" {
-  source          = "github.com/dgourillon/factories/dns"
+  source          = "github.com/dgourillon/fast-fabric-modules/dns"
   for_each        = toset(var.dns_zones)
   project_id      = coalesce(local.vpc.host_project, module.project.project_id)
   type            = "private"
@@ -148,7 +148,7 @@ module "dns" {
 }
 
 module "project" {
-  source                     = "github.com/dgourillon/factories/project"
+  source                     = "github.com/dgourillon/fast-fabric-modules/project"
   billing_account            = local.billing_account_id
   name                       = var.project_id
   prefix                     = var.prefix
@@ -179,7 +179,7 @@ module "project" {
 }
 
 module "service-accounts" {
-  source     = "github.com/dgourillon/factories/iam-service-account"
+  source     = "github.com/dgourillon/fast-fabric-modules/iam-service-account"
   for_each   = var.service_accounts
   name       = each.key
   project_id = module.project.project_id
