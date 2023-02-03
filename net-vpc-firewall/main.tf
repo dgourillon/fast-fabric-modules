@@ -132,7 +132,7 @@ resource "google_compute_firewall" "custom-rules" {
   project     = var.project_id
   source_ranges = (
     each.value.direction == "INGRESS"
-    ? coalesce(each.value.ranges, []) == [] ? ["0.0.0.0/0"] : each.value.ranges
+    ? coalesce(each.value.ranges, []) == [] ? [] : each.value.ranges
     : null
   )
   destination_ranges = (
